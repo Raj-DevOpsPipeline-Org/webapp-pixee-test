@@ -16,8 +16,7 @@ def populate_db(filepath, bcrypt_instance):
             for row in reader:
                 hashed_password = hash_password(row[3], bcrypt_instance)
                 # skip if the user exists (no updates)
-                existing_user = Account.query.filter_by(email=row[2]).first()
-                if existing_user:
+                if existing_user := Account.query.filter_by(email=row[2]).first():
                     print(f"Skipping as User with email {row[2]} already exists.")
                     continue
                 else:
